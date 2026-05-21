@@ -1,47 +1,13 @@
-'''
-[문제]
-다음과 같이 정수들로 이루어진 수열이 있을 때, 이 수열에서 오른쪽으로 한칸씩 이동하면서 양옆의 두 건물보다 높은 건물만 좋은 조망을 가진다고 한다.
-이 때 모든 좋은 조망을 가지는 건물들의 조망의 합을 구하는 프로그램을 작성하시오
-
-예시)
-
-입력:
-10
-0 0 0 0 10 0 0 0 0 0
-
-출력:
-0
-
-예시 2)
-
-입력:
-10
-3 5 3 3 6 1 2 7 0 0
-
-출력:
-8
-
-입력 예시
-10
-0 0 0 0 10 0 0 0 0 0
-10
-3 5 3 3 6 1 2 7 0 0
-
-출력 예시
-0
-8
-'''
-
 # 기본 제공코드는 임의 수정해도 관계 없습니다. 단, 입출력 포맷 주의
 # 아래 표준 입출력 예제 필요시 참고하세요.
 
 # 표준 입력 예제
 '''
-a = int(input())                        #정수형 변수 1개 입력 받는 예제
-b, c = map(int, input().split())        #정수형 변수 2개 입력 받는 예제 
-d = float(input())                      #실수형 변수 1개 입력 받는 예제
-e, f, g = map(float, input().split())   #실수형 변수 3개 입력 받는 예제
-h = input()                             #문자열 변수 1개 입력 받는 예제
+a = int(input())                        정수형 변수 1개 입력 받는 예제
+b, c = map(int, input().split())        정수형 변수 2개 입력 받는 예제 
+d = float(input())                      실수형 변수 1개 입력 받는 예제
+e, f, g = map(float, input().split())   실수형 변수 3개 입력 받는 예제
+h = input()                             문자열 변수 1개 입력 받는 예제
 '''
 
 # 표준 출력 예제
@@ -49,10 +15,10 @@ h = input()                             #문자열 변수 1개 입력 받는 예
 a, b = 6, 3
 c, d, e = 1.0, 2.5, 3.4
 f = "ABC"
-print(a)                                #정수형 변수 1개 출력하는 예제
-print(b, end = " ")                     #줄바꿈 하지 않고 정수형 변수와 공백을 출력하는 예제
-print(c, d, e)                          #실수형 변수 3개 출력하는 예제
-print(f)                                #문자열 1개 출력하는 예제
+print(a)                                정수형 변수 1개 출력하는 예제
+print(b, end = " ")                     줄바꿈 하지 않고 정수형 변수와 공백을 출력하는 예제
+print(c, d, e)                          실수형 변수 3개 출력하는 예제
+print(f)                                문자열 1개 출력하는 예제
 '''
 
 
@@ -70,17 +36,24 @@ print(f)                                #문자열 1개 출력하는 예제
 #import sys
 #sys.stdin = open("input.txt", "r")
 
-T = int(input())
-# 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
-for test_case in range(1, T + 1):
+T = 10 # 10 빌딩
+for tc in range(1, T + 1): #1부터 10까지 1 2 3 4 5 6 7 8 9 10까지 나온다
+	N = int(input()) #빌딩 수
+	buildings= list(map(int,input().split())) #빌딩의키
+	count = 0 #합의 뷰 있는 증
+	data = []
+	for i in range(2, N - 2): # (index 0,1), (index N-2, N-1) 안 써도된다
+		my_height = buildings[i] # 빌딩 높이 검층
+		left_block = max(buildings[i-1], buildings[i-2]) #왼쪽의 제일 높은 옆에 2건물을 잡다
+		right_block = max(buildings[i+1], buildings[i+2]) #오른쪽의 제일 높은 옆에 2건물을 잡다
 
-    N = int(input())
-    heights = list(map(int, input().split()))
-    total_good_view = 0
-    for i in range(2, N - 2):
-        left = max(heights[i-1], heights[i-2])
-        right = max(heights[i+1], heights[i+2])
-        if heights[i] > left and heights[i] > right:
-            total_good_view += heights[i] - max(left, right)
+    	if my_height > left_block and my_height > right_block: # 이 건물은 방해하는 왼,오른쪽 건물보다 더 높다
+			best_block =max(left_block, right_block) #제일 높은 방해하는 건물
+			floors = my_height - best_block #어디에서 뷰가 있는 증
+		else:
+			floors = 0 # 방해해서 뷰가 없다
 
-    print("#{}".format(test_case, total_good_view))
+       	count +=floors
+		data.append(floors)
+        
+	print(f"#{tc}{count}")
